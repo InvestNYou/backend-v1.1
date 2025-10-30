@@ -1,0 +1,48 @@
+name: investnyou-backend
+services:
+- name: api
+  source_dir: /
+  github:
+    repo: your-username/your-repo-name
+    branch: main
+  run_command: npm start
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 5000
+  routes:
+  - path: /
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: "5000"
+  - key: DATABASE_URL
+    value: ${db.DATABASE_URL}
+    type: SECRET
+  - key: JWT_SECRET
+    value: ${jwt.JWT_SECRET}
+    type: SECRET
+  - key: OPENAI_API_KEY
+    value: ${openai.OPENAI_API_KEY}
+    type: SECRET
+  - key: POLYGON_API_KEY
+    value: ${polygon.POLYGON_API_KEY}
+    type: SECRET
+  - key: FRONTEND_URL
+    value: https://your-frontend-domain.com
+  - key: ADDITIONAL_FRONTEND_URLS
+    value: https://staging.your-frontend-domain.com,https://admin.your-frontend-domain.com
+  - key: EMAIL_USER
+    value: ${email.EMAIL_USER}
+    type: SECRET
+  - key: EMAIL_PASS
+    value: ${email.EMAIL_PASS}
+    type: SECRET
+
+databases:
+- name: db
+  engine: PG
+  version: "15"
+  size: db-s-dev-database
+  num_nodes: 1
